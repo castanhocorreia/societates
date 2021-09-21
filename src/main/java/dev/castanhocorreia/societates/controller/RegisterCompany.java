@@ -9,16 +9,26 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @WebServlet(urlPatterns = "/register-company")
 public class RegisterCompany extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String companyName = request.getParameter("companyName");
-    Company company = new Company(companyName);
+    String name = request.getParameter("name");
+    Date foundedIn;
+    try {
+      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+      foundedIn = simpleDateFormat.parse(request.getParameter("foundedIn"));
+    } catch (ParseException parseException) {
+      throw new ServletException(parseException);
+    }
+    Company company = new Company(name, foundedIn);
     Memory.add(company);
     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/company-registered.jsp");
-    request.setAttribute("companyName", company.getName());
+    request.setAttribute("name", company.getName());
     requestDispatcher.forward(request, response);
   }
 }

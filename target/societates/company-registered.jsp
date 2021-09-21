@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,8 @@
   <title>Company Registered</title>
 </head>
 <body>
-  <h1>The company ${ companyName } was succesfully registered.</h1>
+  <c:if test="${ not empty name }">
+    <h1>The company ${name} was succesfully registered.</h1>
+  </c:if>
 </body>
 </html>
