@@ -3,4 +3,6 @@
 .project
 server/
 .settings/
-target/
+target/generated-sources
+target/maven-archiver
+target/maven-status

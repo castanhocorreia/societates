@@ -18,7 +18,7 @@ public class ListCompanies extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/list-companies.jsp");
-    request.setAttribute("companies-list", list);
+    request.setAttribute("companiesList", list);
     requestDispatcher.forward(request, response);
   }
 

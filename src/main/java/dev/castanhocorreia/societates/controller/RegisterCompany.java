@@ -1,5 +1,6 @@
 package dev.castanhocorreia.societates.controller;
 
+import dev.castanhocorreia.societates.database.Memory;
 import dev.castanhocorreia.societates.model.Company;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,6 +16,7 @@ public class RegisterCompany extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String companyName = request.getParameter("companyName");
     Company company = new Company(companyName);
+    Memory.add(company);
     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/company-registered.jsp");
     request.setAttribute("companyName", company.getName());
     requestDispatcher.forward(request, response);
