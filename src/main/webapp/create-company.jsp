@@ -7,11 +7,11 @@
   <title>Register New Company</title>
 </head>
 <body>
-  <form action="register-company" method="POST">
+  <form action="create-company" method="POST">
     <span>Name:</span>
-    <input type="text" name="name">
+    <input type="text" name="newCompanyName">
     <span>Founded In:</span>
-    <input type="text" name="foundedIn">
+    <input type="text" name="newCompanyFoundedDate">
     <input type="submit">
   </form>
 </body>

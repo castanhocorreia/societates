@@ -7,15 +7,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Memory {
+public class JVMMemory {
   private static List<Company> list = new ArrayList<>();
 
   public static void add(Company company) {
-    Memory.list.add(company);
+    JVMMemory.list.add(company);
   }
 
   public static void remove(long id) {
-    Iterator<Company> iterator = Memory.list.iterator();
+    Iterator<Company> iterator = JVMMemory.list.iterator();
     while (iterator.hasNext()) {
       if (iterator.next().getId() == id) {
         iterator.remove();
@@ -24,7 +24,7 @@ public class Memory {
   }
 
   public static void updateCompanyById(long id, String name, Date foundedIn) {
-    for (Company company : Memory.list) {
+    for (Company company : JVMMemory.list) {
       if (company.getId() == id) {
         company.setName(name);
         company.setFoundedIn(foundedIn);
@@ -33,7 +33,7 @@ public class Memory {
   }
 
   public static Company getCompany(long id) {
-    for (Company company : Memory.list) {
+    for (Company company : JVMMemory.list) {
       if (company.getId() == id) {
         return company;
       }
@@ -42,6 +42,6 @@ public class Memory {
   }
 
   public static List<Company> getCompanies() {
-    return Memory.list;
+    return JVMMemory.list;
   }
 }
