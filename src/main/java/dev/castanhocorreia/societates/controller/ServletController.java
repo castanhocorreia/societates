@@ -19,7 +19,11 @@ public class ServletController extends HttpServlet {
     this.request = request;
     this.response = response;
     String uniformResourceIdentifier = this.request.getRequestURI();
+    System.out.println(uniformResourceIdentifier);
     switch (uniformResourceIdentifier) {
+      case "/societates/authenticate-user":
+        this.authenticateUser();
+        break;
       case "/societates/create-company":
         this.createCompanyAction();
         break;
@@ -33,7 +37,7 @@ public class ServletController extends HttpServlet {
         this.deleteCompanyAction();
         break;
       default:
-        this.redirect("redirect:create-company.jsp");
+        this.redirect("forward:authenticate-user.jsp");
     }
   }
 
@@ -48,10 +52,25 @@ public class ServletController extends HttpServlet {
     }
   }
 
+  public void authenticateUser() throws ServletException, IOException {
+    AuthenticateUser authenticateUser = new AuthenticateUser();
+    Boolean authenticatedUser = authenticateUser.execute(this.request, this.response);
+    if (authenticatedUser) {
+      this.redirect("forward:read-companies.jsp");
+    } else {
+      this.redirect("forward:authenticate-user.jsp");
+    }
+  }
+
   public void createCompanyAction() throws IOException, ServletException {
-    CreateCompany createCompany = new CreateCompany();
-    createCompany.execute(this.request, this.response);
-    this.redirect("redirect:read-companies");
+    String updateMethod = this.request.getMethod();
+    if (updateMethod.equals("GET")) {
+      this.redirect("forward:create-company.jsp");
+    } else {
+      CreateCompany createCompany = new CreateCompany();
+      createCompany.execute(this.request, this.response);
+      this.redirect("redirect:read-companies");
+    }
   }
 
   public void readCompaniesAction() throws IOException, ServletException {

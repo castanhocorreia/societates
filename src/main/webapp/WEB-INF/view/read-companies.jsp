@@ -23,8 +23,8 @@
       <tr>
     </thead>
     <tbody>
-      <c:if test="${ not empty name }">
-        <h1>The company ${name} was succesfully registered.</h1>
+      <c:if test="${not empty name}">
+        <h1>The company ${name} was successfully registered.</h1>
       </c:if>
       <c:forEach items="${companiesList}" var="company">
         <tr>
@@ -38,6 +38,6 @@
       </c:forEach>
     </tbody>
   </table>
-  <a href="create-company.jsp">CREATE NEW COMPANY</a>
+  <a href="create-company">CREATE NEW COMPANY</a>
 </body>
 </html>
