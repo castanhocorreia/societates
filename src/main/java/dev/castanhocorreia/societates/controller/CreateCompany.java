@@ -5,13 +5,12 @@ import dev.castanhocorreia.societates.model.Company;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateCompany {
-  public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+  public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     String newCompanyName = request.getParameter("newCompanyName");
     Date newCompanyFoundedDate;
     try {
@@ -22,6 +21,5 @@ public class CreateCompany {
     }
     Company newCompany = new Company(newCompanyName, newCompanyFoundedDate);
     JVMMemory.add(newCompany);
-    response.sendRedirect("read-companies");
   }
 }
