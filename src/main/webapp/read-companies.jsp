@@ -38,5 +38,6 @@
       </c:forEach>
     </tbody>
   </table>
+  <a href="create-company.jsp">CREATE NEW COMPANY</a>
 </body>
 </html>
