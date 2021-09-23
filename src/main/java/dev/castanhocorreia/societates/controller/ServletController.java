@@ -43,7 +43,7 @@ public class ServletController extends HttpServlet {
     if (redirectMode.equals("redirect")) {
       this.response.sendRedirect(redirectUrl);
     } else {
-      RequestDispatcher requestDispatcher = this.request.getRequestDispatcher(redirectUrl);
+      RequestDispatcher requestDispatcher = this.request.getRequestDispatcher("WEB-INF/view/" + redirectUrl);
       requestDispatcher.forward(this.request, this.response);
     }
   }
@@ -57,7 +57,7 @@ public class ServletController extends HttpServlet {
   public void readCompaniesAction() throws IOException, ServletException {
     ReadCompanies readCompanies = new ReadCompanies();
     readCompanies.execute(this.request, this.response);
-    this.redirect("forward:/read-companies.jsp");
+    this.redirect("forward:read-companies.jsp");
   }
 
   public void updateCompanyAction() throws IOException, ServletException {
@@ -65,7 +65,7 @@ public class ServletController extends HttpServlet {
     String updateMethod = this.request.getMethod();
     if (updateMethod.equals("GET")) {
       updateCompany.doGet(this.request, this.response);
-      this.redirect("forward:/update-company.jsp");
+      this.redirect("forward:update-company.jsp");
     } else {
       updateCompany.doPost(this.request, this.response);
       this.redirect("redirect:read-companies");
