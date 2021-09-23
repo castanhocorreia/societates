@@ -18,15 +18,22 @@
         <th>Registration Date</th>
         <th>Name</th>
         <th>Founded In</th>
+        <th>Update</th>
+        <th>Delete</th>
       <tr>
     </thead>
     <tbody>
+      <c:if test="${ not empty name }">
+        <h1>The company ${name} was succesfully registered.</h1>
+      </c:if>
       <c:forEach items="${companiesList}" var="company">
         <tr>
           <td>${company.id}</td>
           <td><fmt:formatDate value="${company.registrationDate}" pattern="dd/MM/yyyy"/></td>
           <td>${company.name}</td>
           <td><fmt:formatDate value="${company.foundedIn}" pattern="dd/MM/yyyy"/></td>
+          <td><a href="update-company?id=${company.id}">edit</a></td>
+          <td><a href="delete-company?id=${company.id}">delete</a></td>
         </tr>
       </c:forEach>
     </tbody>

@@ -16,7 +16,8 @@ public class ListCompanies extends HttpServlet {
   private static List<Company> list = Memory.getCompanies();
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  protected void service(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/list-companies.jsp");
     request.setAttribute("companiesList", list);
     requestDispatcher.forward(request, response);

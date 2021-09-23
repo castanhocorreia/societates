@@ -32,4 +32,12 @@ public class Company {
   public Date getFoundedIn() {
     return this.foundedIn;
   }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setFoundedIn(Date foundedIn) {
+    this.foundedIn = foundedIn;
+  }
 }

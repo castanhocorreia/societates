@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -27,8 +26,6 @@ public class RegisterCompany extends HttpServlet {
     }
     Company company = new Company(name, foundedIn);
     Memory.add(company);
-    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/company-registered.jsp");
-    request.setAttribute("name", company.getName());
-    requestDispatcher.forward(request, response);
+    response.sendRedirect("list-companies");
   }
 }
