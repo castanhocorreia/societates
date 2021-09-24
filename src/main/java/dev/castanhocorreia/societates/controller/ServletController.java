@@ -33,11 +33,7 @@ public class ServletController extends HttpServlet {
     }
     switch (uniformResourceIdentifier) {
       case "/societates/authenticate-user":
-        if (accreditedUser == null) {
-          this.authenticateUserAction();
-        } else {
-          this.readCompaniesAction();
-        }
+        this.readCompaniesAction();
         break;
       case "/societates/logout-user":
         this.logoutUserAction();
