@@ -24,13 +24,6 @@ public class ServletController extends HttpServlet {
     this.response = response;
     this.session = this.request.getSession();
     String uniformResourceIdentifier = this.request.getRequestURI();
-    System.out.println(uniformResourceIdentifier);
-    HttpSession httpSession = request.getSession();
-    Object accreditedUser = httpSession.getAttribute("accreditedUser");
-    if (accreditedUser == null) {
-      this.authenticateUserAction();
-      return;
-    }
     switch (uniformResourceIdentifier) {
       case "/societates/authenticate-user":
         this.readCompaniesAction();

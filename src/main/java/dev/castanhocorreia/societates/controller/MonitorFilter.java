@@ -1,27 +1,25 @@
 package dev.castanhocorreia.societates.controller;
 
-import java.io.IOException;
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*")
 public class MonitorFilter implements Filter {
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
       throws IOException, ServletException {
+    HttpServletRequest request = (HttpServletRequest) servletRequest;
+    HttpServletResponse response = (HttpServletResponse) servletResponse;
     long timeBeforeRequest = System.currentTimeMillis();
-    String requestAction = "";
-    if (request instanceof HttpServletRequest) {
-      requestAction = ((HttpServletRequest) request).getRequestURI();
-    }
+    String requestAction = request.getRequestURI();
     chain.doFilter(request, response);
     long timeAfterRequest = System.currentTimeMillis();
-    System.out.println(requestAction + (timeAfterRequest - timeBeforeRequest));
+    long executionTime = timeAfterRequest - timeBeforeRequest;
+    System.out.println(String.format("%s -> [%d] ms", requestAction, executionTime));
   }
 }
