@@ -29,6 +29,7 @@ public class ServletController extends HttpServlet {
     Object accreditedUser = httpSession.getAttribute("accreditedUser");
     if (accreditedUser == null) {
       this.authenticateUserAction();
+      return;
     }
     switch (uniformResourceIdentifier) {
       case "/societates/authenticate-user":
@@ -64,7 +65,7 @@ public class ServletController extends HttpServlet {
     if (redirectMode.equals("redirect")) {
       this.response.sendRedirect(redirectUrl);
     } else {
-      RequestDispatcher requestDispatcher = this.request.getRequestDispatcher("WEB-INF/view/" + redirectUrl);
+      RequestDispatcher requestDispatcher = this.request.getRequestDispatcher("/WEB-INF/view/" + redirectUrl);
       requestDispatcher.forward(this.request, this.response);
     }
   }
