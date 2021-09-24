@@ -11,6 +11,10 @@
   <title>Companies List</title>
 </head>
 <body>
+  <a href="logout-user">Logout</a>
+  <c:if test="${not empty accreditedUser}">
+    <span>User: ${accreditedUser.login}.</span>
+  </c:if>
   <table>
     <thead>
       <tr>
@@ -23,9 +27,6 @@
       <tr>
     </thead>
     <tbody>
-      <c:if test="${not empty accreditedUser}">
-        <span>User: ${accreditedUser.login}.</span>
-      </c:if>
       <c:forEach items="${companiesList}" var="company">
         <tr>
           <td>${company.id}</td>

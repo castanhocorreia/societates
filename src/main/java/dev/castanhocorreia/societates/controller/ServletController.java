@@ -15,22 +15,31 @@ import dev.castanhocorreia.societates.model.User;
 public class ServletController extends HttpServlet {
   HttpServletRequest request;
   HttpServletResponse response;
+  HttpSession session;
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     this.request = request;
     this.response = response;
+    this.session = this.request.getSession();
     String uniformResourceIdentifier = this.request.getRequestURI();
     System.out.println(uniformResourceIdentifier);
     HttpSession httpSession = request.getSession();
     Object accreditedUser = httpSession.getAttribute("accreditedUser");
     if (accreditedUser == null) {
-      this.authenticateUser();
+      this.authenticateUserAction();
     }
     switch (uniformResourceIdentifier) {
       case "/societates/authenticate-user":
-        this.authenticateUser();
+        if (accreditedUser == null) {
+          this.authenticateUserAction();
+        } else {
+          this.readCompaniesAction();
+        }
+        break;
+      case "/societates/logout-user":
+        this.logoutUserAction();
         break;
       case "/societates/create-company":
         this.createCompanyAction();
@@ -60,13 +69,12 @@ public class ServletController extends HttpServlet {
     }
   }
 
-  public void authenticateUser() throws ServletException, IOException {
+  public void authenticateUserAction() throws ServletException, IOException {
     AuthenticateUser authenticateUser = new AuthenticateUser();
     try {
       User user = authenticateUser.execute(this.request, this.response);
       if (user != null) {
-        HttpSession httpSession = request.getSession();
-        httpSession.setAttribute("accreditedUser", user);
+        this.session.setAttribute("accreditedUser", user);
         this.redirect("forward:read-companies.jsp");
       } else {
         this.request.setAttribute("incorrectCredentials", true);
@@ -75,6 +83,11 @@ public class ServletController extends HttpServlet {
     } catch (ServletException exception) {
       this.redirect("forward:authenticate-user.jsp");
     }
+  }
+
+  public void logoutUserAction() throws IOException, ServletException {
+    this.session.invalidate();
+    this.redirect("forward:authenticate-user.jsp");
   }
 
   public void createCompanyAction() throws IOException, ServletException {
