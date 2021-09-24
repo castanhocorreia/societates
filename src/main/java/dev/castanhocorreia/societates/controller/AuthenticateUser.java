@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AuthenticateUser {
-  public Boolean execute(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+  public User execute(HttpServletRequest request, HttpServletResponse response) throws ServletException {
     String login = request.getParameter("login");
     String password = request.getParameter("password");
+    if (login == null || password == null) {
+      throw new ServletException("The login or password is null.");
+    }
     User user = JVMMemory.authenticateUser(login, password);
-    return user != null;
+    return user;
   }
 }

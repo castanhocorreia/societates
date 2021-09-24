@@ -23,8 +23,8 @@
       <tr>
     </thead>
     <tbody>
-      <c:if test="${not empty name}">
-        <h1>The company ${name} was successfully registered.</h1>
+      <c:if test="${not empty accreditedUser}">
+        <span>User: ${accreditedUser.login}.</span>
       </c:if>
       <c:forEach items="${companiesList}" var="company">
         <tr>

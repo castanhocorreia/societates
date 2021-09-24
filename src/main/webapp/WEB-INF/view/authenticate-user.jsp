@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,5 +15,8 @@
     <input type="password" name="password">
     <input type="submit">
   </form>
+  <c:if test="${incorrectCredentials eq true}">
+    <spans style="color: red">The login or password is incorrect.</spans>
+  </c:if>
 </body>
 </html>

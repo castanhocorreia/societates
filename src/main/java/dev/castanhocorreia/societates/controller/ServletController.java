@@ -4,9 +4,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
+
+import dev.castanhocorreia.societates.model.User;
 
 @WebServlet(urlPatterns = "/")
 public class ServletController extends HttpServlet {
@@ -20,6 +23,11 @@ public class ServletController extends HttpServlet {
     this.response = response;
     String uniformResourceIdentifier = this.request.getRequestURI();
     System.out.println(uniformResourceIdentifier);
+    HttpSession httpSession = request.getSession();
+    Object accreditedUser = httpSession.getAttribute("accreditedUser");
+    if (accreditedUser == null) {
+      this.authenticateUser();
+    }
     switch (uniformResourceIdentifier) {
       case "/societates/authenticate-user":
         this.authenticateUser();
@@ -37,7 +45,7 @@ public class ServletController extends HttpServlet {
         this.deleteCompanyAction();
         break;
       default:
-        this.redirect("forward:authenticate-user.jsp");
+        this.redirect("forward:read-companies.jsp");
     }
   }
 
@@ -54,10 +62,17 @@ public class ServletController extends HttpServlet {
 
   public void authenticateUser() throws ServletException, IOException {
     AuthenticateUser authenticateUser = new AuthenticateUser();
-    Boolean authenticatedUser = authenticateUser.execute(this.request, this.response);
-    if (authenticatedUser) {
-      this.redirect("forward:read-companies.jsp");
-    } else {
+    try {
+      User user = authenticateUser.execute(this.request, this.response);
+      if (user != null) {
+        HttpSession httpSession = request.getSession();
+        httpSession.setAttribute("accreditedUser", user);
+        this.redirect("forward:read-companies.jsp");
+      } else {
+        this.request.setAttribute("incorrectCredentials", true);
+        this.redirect("forward:authenticate-user.jsp");
+      }
+    } catch (ServletException exception) {
       this.redirect("forward:authenticate-user.jsp");
     }
   }
